@@ -1,71 +1,106 @@
 package br.com.frw;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-        Integer num = 0;
+        String val = "n";
+        Aluno aluno;
+        int aprovado = 0;
+        int recu1=0;
+        int recu2=0;
+        int reprovado=0;
+        int maiortotal=0;
+        int maiorex=0;
+        ArrayList<Aluno> alunos = new ArrayList<Aluno>();
+        Scanner leitor = new Scanner(System.in);
+
         do {
-            Scanner leitor = new Scanner(System.in);
 
             System.out.println("Informe sua turma: ");
             String turma = leitor.nextLine();
 
-
             System.out.println("Informe a nota da primeira prova: ");
-            Double prova1 = leitor.nextDouble();
-            leitor = new Scanner(System.in);
+            Double prova1 = LeitorUtil.LerDouble(leitor);
 
             System.out.println("Informe a nota da segunda prova: ");
-            Double prova2 = leitor.nextDouble();
-            leitor = new Scanner(System.in);
+            Double prova2 = LeitorUtil.LerDouble(leitor);
 
             System.out.println("Informe a nota da terceira prova: ");
-            Double prova3 = leitor.nextDouble();
-            leitor = new Scanner(System.in);
+            Double prova3 = LeitorUtil.LerDouble(leitor);
 
             System.out.println("Informe a nota total de exercicios: ");
-            Double exercicios = leitor.nextDouble();
-            leitor = new Scanner(System.in);
+            Double exercicios = LeitorUtil.LerDouble(leitor);
 
             System.out.println("Informe seu nome: ");
-            String nome = leitor.nextLine();
-            leitor = new Scanner(System.in);
+            String nome = LeitorUtil.LerTexto(leitor);
 
             Double total = prova1 + prova2 + (prova3 * 2) + exercicios;
+
+            aluno = new Aluno(nome, turma, prova1, prova2, prova3, exercicios, total);
+            alunos.add(aluno);
 
 
             System.out.println("Nome: " + nome);
             System.out.println("Turma: " + turma);
             if (total >= 100) {
-                System.out.println("Total das notas: 100");
+                total = 100.0;
+                System.out.println("Total das notas: " + total);
             } else {
                 System.out.println("Total das notas: " + total);
             }
 
             if (total >= 60) {
                 System.out.println("Aprovado!!");
-            } else if (total >= 50 && total <= 59) {
+            } else if (total >= 50 && total < 60) {
                 System.out.println("Recuperação - Prova 1");
-            } else if (total >= 40 && total <= 49) {
+            } else if (total >= 40 && total < 50) {
                 System.out.println("Recuperação - Prova 2");
             } else {
                 System.out.println("Reprovado");
             }
 
+            System.out.println("Deseja continuar o programa? (s/n)");
+            val = LeitorUtil.LerTexto(leitor);
 
-            System.out.println("Deseja continuar o programa? Caso não digite '0' ou Pressione qualquer outro numero para continuar");
-            num = leitor.nextInt();
-            if(num==0){
-                if(total >= 60){
-                    System.out.println("Alunos Aprovados: " + nome +"  Nota: " + total);
-                    }else if(total >= 40 && total <=59){
-                    System.out.println("Alunos Aprovados: " + nome +"  Nota: " + total);
-                }
+
+        } while (!val.equals("n"));
+
+       for(int i=0; i < alunos.size(); i++){
+           if(alunos.get(i).total >= 60){
+               aprovado++;
+           }else if(alunos.get(i).total >= 50 && alunos.get(i).total <60){
+               recu1++;
+           }else if(alunos.get(i).total >= 40 && alunos.get(i).total <50){
+               recu2++;
+           }else{
+               reprovado++;
+           }
+
+       }
+        System.out.println("Aprovados - " + aprovado);
+
+        System.out.println("Recuperação I - " + recu1);
+
+        System.out.println("Recuperação II - " + recu2);
+
+        System.out.println("Reprovado - " + reprovado);
+
+        for(int conttot = 0;conttot < alunos.size(); conttot++)
+        {
+            Aluno alunomaior = (Aluno) alunos.get(conttot);
+
+
+            if(aluno.getTotal() > maiortotal)
+            {
+
+
+                maiortotal = aluno.getTotal();
             }
+        }
 
-        } while (num != 0);
-
+        return maiortotal;
     }
 
 }
