@@ -11,8 +11,5 @@ public class Aluno {
         this.nota3 = nota3;
         this.total = total;
         this.notaexercicio = notaex;
-
-
-
     }
 }

@@ -6,13 +6,23 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) {
         String val = "n";
+
         Aluno aluno;
+
         int aprovado = 0;
         int recu1=0;
         int recu2=0;
         int reprovado=0;
-        int maiortotal=0;
-        int maiorex=0;
+
+        Double maiorNotatotal = 0.0;
+        Double valorMaiortotal = 0.0;
+
+        String maiorNotaex = "";
+        Double valorMaiorex= 0.0;
+
+        boolean primeiraExecucao = true;
+
+
         ArrayList<Aluno> alunos = new ArrayList<Aluno>();
         Scanner leitor = new Scanner(System.in);
 
@@ -87,20 +97,27 @@ public class App {
 
         System.out.println("Reprovado - " + reprovado);
 
-        for(int conttot = 0;conttot < alunos.size(); conttot++)
-        {
-            Aluno alunomaior = (Aluno) alunos.get(conttot);
+        if(primeiraExecucao){
+            maiorNotatotal = aluno.total;
 
+            valorMaiortotal = aluno.total;
+            primeiraExecucao = false;
+        }else{
+            if(aluno.total > valorMaiortotal) {
 
-            if(aluno.getTotal() > maiortotal)
-            {
-
-
-                maiortotal = aluno.getTotal();
+                valorMaiortotal = aluno.total;
+                primeiraExecucao = false;
+                System.out.println("Maior nota total é: " + valorMaiortotal + " - " + maiorNotatotal);
             }
+            System.out.println("Maior nota total é: " + valorMaiortotal + " - " + maiorNotatotal);
+
         }
 
-        return maiortotal;
+
+
+
+
+
     }
 
 }
